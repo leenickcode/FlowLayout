@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
               TextView view= (TextView) getLayoutInflater().inflate(R.layout.item_view,null);
                 ViewGroup.MarginLayoutParams marginLayoutParams=new ViewGroup.MarginLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                marginLayoutParams.setMarginStart(10);
+                marginLayoutParams.setMargins(10,10,10,10);
                 view.setLayoutParams(marginLayoutParams);
                 flowLayout.addView(view);
             }
