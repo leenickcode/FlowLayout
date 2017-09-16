@@ -2,21 +2,21 @@ package com.demo.nick.flowlayoutdemo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
+
 public class MainActivity extends AppCompatActivity {
-    FlowLayout flowLayout;
     Button add;
+    FlowLayout  flowLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        flowLayout= (FlowLayout) findViewById(R.id.fl);
+        flowLayout = (FlowLayout) findViewById(R.id.fl);
         add= (Button) findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,5 +28,8 @@ public class MainActivity extends AppCompatActivity {
                 flowLayout.addView(view);
             }
         });
+
+
     }
+
 }

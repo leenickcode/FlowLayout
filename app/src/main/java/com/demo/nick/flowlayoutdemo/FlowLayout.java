@@ -33,7 +33,7 @@ public class FlowLayout extends ViewGroup {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         //模式
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -54,25 +54,33 @@ public class FlowLayout extends ViewGroup {
             int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
             //子VIEW的高度
             int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+            Log.e(TAG, "childHeight: "+childHeight );
             if (lineWidth + childWidth > measureWidth - getPaddingLeft() - getPaddingLeft()) {  //换行
                 //得到该行的总宽
                 width = Math.max(width, lineWidth);
                 //新行初始宽度为0，高度叠加
                 lineWidth = childWidth;
                 height += lineHeight;
+                lineHeight=childHeight;//换行后，此时的行高为当前的子view的行高，目前只有一个子view。-----开始没有注意这个问题，导致高度总是有点偏差。
             } else { //不换行
                 lineWidth += childWidth;
                 lineHeight = Math.max(lineHeight, childHeight);
             }
             //到达最后一个
-            if (i == cCount) {
+            if (i == cCount-1) {
                 width = Math.max(lineWidth, childWidth);
                 height += lineHeight;
             }
         }
+
         //设置自身宽高。如果是AT_MOST模式。则返回子view的总宽和总高，并且要加上padding
-        setMeasuredDimension(widthMode == MeasureSpec.AT_MOST ? width + getPaddingLeft() + getPaddingRight() : measureWidth,
-                heightMode == MeasureSpec.AT_MOST ? height + getPaddingTop() + getPaddingBottom() : measureHeight);
+        Log.e(TAG, "模式: "+heightMode);
+         //注意！！不能这么判断AT_MOST，这也是我疑问的地方，上面答应的值是0，也就是UNSPECIFIED模式，很不解。
+//        setMeasuredDimension(widthMode == MeasureSpec.AT_MOST ? width + getPaddingLeft() + getPaddingRight() : measureWidth,
+//                heightMode == MeasureSpec.AT_MOST ? height + getPaddingTop() + getPaddingBottom() : measureHeight);
+        //应该这样判断。
+        setMeasuredDimension(widthMode == MeasureSpec.EXACTLY ? measureWidth :width + getPaddingLeft() + getPaddingRight() ,
+                heightMode == MeasureSpec.EXACTLY ?measureHeight: height + getPaddingTop() + getPaddingBottom() );
     }
 
 
